@@ -1,86 +1,68 @@
-const inquirer = require('inquirer')
-const fs = require('fs')
-inquirer
-    .prompt([
-        {
-            type: 'input',
-            message: 'What would you like to do?',
-            name: 'action',
-        },
+const inquirer = require("inquirer");
+const fs = require("fs");
+const express = require('express');
+// Import and require Pool (node-postgres)
+// We'll be creating a Connection Pool. Read up on the benefits here: https://node-postgres.com/features/pooling
+const { Pool } = require('pg');
 
-        {
-            type: 'input',
-            message: 'What is the name of the department?',
-            name: 'departmentName',
-        },
+const PORT = process.env.PORT || 3001;
+const app = express();
 
-        {
-            type: 'input',
-            message: 'What would you like to do?',
-            name: 'actionTwo',
-        },
 
-        {
-            type: 'input',
-            message: 'What is the name of the role?',
-            name: 'roleName',
-        },
+// Express middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+const listQuestions =  {
+    type: "list",
+    message: "What would you like to do?",
+    name: "actions",
+    choices: [
+      "Add Employee",
+      "Update Employee Role",
+      "View all Roles",
+      "Add Role",
+      "View All Departments",
+      "Add Departments",
+      "Quit",
+    ],
+  }
+// Connect to database
+const pool = new Pool(
+  {
+    
+    user: 'postgres',
+    password: 'texas',
+    host: 'localhost',
+    database: 'thomassports_db'
+},
+console.log('Connected to the thomasspots_db database!')
+)
 
-        {
-            type: 'input',
-            message: 'What is the salary of the role?',
-            name: 'roleSalary',
-        },
+pool.connect();
 
-        {
-            type: 'input',
-            message: 'Which department does the role belong to?',
-            name: 'roleBelong',
-        },
 
-        {
-            type: 'input',
-            message: 'What would you like to do?',
-            name: 'actionThree',
-        },
+function init() {
+    inquirer
+  .prompt(listQuestions)
+    .then((answers) => {
+    console.log(answers.actions)
+ })
 
-        {
-            type: 'input',
-            message: 'What is the employees first name?',
-            name: 'employeeFirst',
-        },
+ switch (listQuestions) {
+    case: 'Add Employees' 
+    //
+    break;
 
-        {
-            type: 'input',
-            message: 'What is the employees last name?',
-            name: 'employeeLast',
-        },
 
-        {
-            type: 'input',
-            message: 'What is the employees role?',
-            name: 'employeeRole',
-        },
+ }
 
-        {
-            type: 'input',
-            message: 'What is the employees manager?',
-            name: 'employeeManager',
-        },
 
-        {
-            type: 'input',
-            message: 'What would you like to do?',
-            name: 'actionFour',
-        },
+}
 
-        {
-            type: 'input',
-            message: 'Which employee/s role you want to update?',
-            name: 'employeeRoleUpdated',
-            choices: []
-        },
+init()
 
-    ])
-    .then((response) =>
-    console.log(response))
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+  
