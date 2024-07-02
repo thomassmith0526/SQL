@@ -105,13 +105,34 @@ function init() {
 
         break;
 
-      // case "Update Employee Role":
-      //   const newRoleID = "";
-      //   let tsUER = `UPDATE employee SET role = '${newRoleID}'`;
-      //   pool.query(tsUER, function (err, result) {
-      //     console.log(result +  "records updated");
-      //   });
-      //   break;
+      case "Update Employee Role":
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              message: "What is the employees ID?",
+              name: "emp_ID",
+            },
+            {
+              type: "input",
+              message: "Enter new role for the employee",
+              name: "new_ID",
+            },
+          ])
+          .then((answers) => {
+            pool.query(
+              `UPDATE employees SET role = ${answers.emp_ID}  WHERE id = ${answers.new_ID}`,
+              (err, results) => {
+                if (err) {
+                  console.error("Error with update", err);
+                } else {
+                  console.log("Employee updated successfully");
+                }
+              }
+            );
+          });
+
+        break;
 
       case "Add Role":
         inquirer
