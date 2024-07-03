@@ -88,7 +88,7 @@ function init() {
      updateEmployee()
           .then((answers) => {
             pool.query(
-              `UPDATE employees SET role = ${answers.emp_ID}  WHERE id = ${answers.new_ID}`,
+              `UPDATE employees SET id = ${answers.emp_ID}  WHERE role_id = ${answers.new_ID}`,
               (err, results) => {
                 if (err) {
                   console.error("Error with update", err);
