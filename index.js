@@ -3,10 +3,10 @@ const fs = require("fs");
 const express = require("express");
 const { Pool } = require("pg");
 const table = require("console.table");
-const addEmployee = require("./add-employee");
-const updateEmployee = require("./update-employee");
-const addRole = require("./add-role");
-const addDepartment = require("./add-departments");
+const addEmployee = require("./JS/add-employee");
+const updateEmployee = require("./JS/update-employee");
+const addRole = require("./JS/add-role");
+const addDepartment = require("./JS/add-departments");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
